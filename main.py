@@ -7,15 +7,15 @@ def setup():
     im = [pygame.image.load("noughtsandcrossesboard.jpg").convert(), pygame.image.load("crosses.PNG").convert(), pygame.image.load("nought.PNG").convert()]
     im[0] = pygame.transform.scale(im[0], (500, 500))
     pygame.font.init()
-    font2 = pygame.font.Font("C:\Windows\Fonts\calibril.ttf", 55)
+    font2 = pygame.font.Font("font1.ttf", 50)
     title = font2.render('Noughts and Crosses!', False, (0, 0, 0))
     win.blit(title, (0, 0))
     playbtn = pygame.draw.rect(win, (0, 255, 255), (100, 75, 300, 200))
-    font2 = pygame.font.Font("C:\Windows\Fonts\calibril.ttf", 100)
+    font2 = pygame.font.Font("font1.ttf", 100)
     playtxt = font2.render('Play!', False, (0, 0, 0))
     win.blit(playtxt, (150, 125))
     aibtn = pygame.draw.rect(win, (0, 255, 255), (100, 300, 300, 200))
-    font2 = pygame.font.Font("C:\Windows\Fonts\calibril.ttf", 50)
+    font2 = pygame.font.Font("font1.ttf", 50)
     aitxt0 = font2.render('Play with ', False, (0, 0, 0))
     aitxt1 = font2.render('computer!', False, (0, 0, 0))
     win.blit(aitxt0, (125, 350))
@@ -52,7 +52,7 @@ def normal(win, im):
     while run:
         pygame.display.update()
         win.fill((255, 255, 255), (0,0, 500, 100))
-        font2 = pygame.font.Font("C:\Windows\Fonts\calibril.ttf", 70)
+        font2 = pygame.font.Font("font1.ttf", 60)
         turntxt = font2.render("It's {} turn!".format(symbol[turn]), False, (0, 0, 0))
         win.blit(turntxt, (0, 0))
         for event in pygame.event.get():
@@ -89,7 +89,7 @@ def ai(win, im):
     while run:
         pygame.display.update()
         win.fill((255, 255, 255), (0, 0, 500, 100))
-        font2 = pygame.font.Font("C:\Windows\Fonts\calibril.ttf", 50)
+        font2 = pygame.font.Font("font1.ttf", 50)
         turntxt = font2.render("It's {} turn!".format(symbol[turn]), False, (0, 0, 0))
         win.blit(turntxt, (0, 0))
         for event in pygame.event.get():
@@ -100,22 +100,20 @@ def ai(win, im):
                 mouse_position = pygame.mouse.get_pos()
                 for i in range(0, len(places)):
                     if (places[i].collidepoint(mouse_position)):
-                        if testwin(im, turn, win, log, i, symbol, places, 50) == "end":
-                            pygame.display.quit()
-                            setup()
-                        if turn == 1:
-                            turn+=1
+                         if log[i] == "_":
+                            if testwin(im, turn, win, log, i, symbol, places, 35) == "end":
+                                pygame.display.quit()
+                                setup()
+                            turn += 1
                             win.fill((255, 255, 255), (0, 0, 500, 100))
-                            font2 = pygame.font.Font("C:\Windows\Fonts\calibril.ttf", 35)
+                            font2 = pygame.font.Font("font1.ttf", 35)
                             turntxt = font2.render("{} is thinking about it!".format(symbol[turn]), False, (0, 0, 0))
                             win.blit(turntxt, (0, 0))
                             pygame.display.update()
                             time.sleep(1)
-                            if testwin(im, turn, win, log, processing(log), symbol, places, 50) == "end":
+                            if testwin(im, turn, win, log, processing(log), symbol, places, 35) == "end":
                                 pygame.display.quit()
                                 setup()
-                            turn-=1
-                        elif turn == 2:
                             turn-=1
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
@@ -155,7 +153,7 @@ def testwin(im, turn, win, log, i, symbol, places, size):
     elif ck8 == "111" or ck8 == "222":
         winning, one, two, mod1, mod2, mod3, mod4 = True, 6, 8, 0, 75, 150, 75
     if winning:
-        font2 = pygame.font.Font("C:\Windows\Fonts\impact.ttf", size)
+        font2 = pygame.font.Font("font2.ttf", size)
         pygame.draw.line(win, (255, 0, 0), (list(places[one])[0]+mod1, list(places[one])[1]+mod2), (list(places[two])[0]+mod3, list(places[two])[1]+mod4), 10)
         pygame.display.update()
         time.sleep(1)
@@ -167,7 +165,7 @@ def testwin(im, turn, win, log, i, symbol, places, size):
             time.sleep(0.1)
         return "end"
     elif "_" not in log:
-        font2 = pygame.font.Font("C:\Windows\Fonts\impact.ttf", size)
+        font2 = pygame.font.Font("font2.ttf", size)
         time.sleep(1)
         win.fill((255, 255, 255))
         for i in range(0, 20):
